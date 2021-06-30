@@ -12,40 +12,77 @@ library(tidyverse)
 data <- read.csv(file="https://onlinestatbook.com/case_studies_rvls/physical_strength/data.txt",sep="",header=TRUE)  
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
-```
+
+
 
 ## Including Plots
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
-
 ###Plot scatterplot
+
+
 
 ```{r}
 plot(SIMS~ARM,data=data)
 ```
+##Now with ggplot - first select the basic data
+
+
+
 ```{r}
 basicNN <- ggplot(data,aes(y=SIMS,x=ARM))
 ```
+##Now add in scatterplot
+
 ```{r}
 basicNN + geom_point()
 ```
- 
+  
+  
+
+
 The y-axis is SIMS and the x-axis is ARM. This plot shows that there is a positive linear correlation. 
+
+
+# Numerical results
+
+```{r}
+cor(SIMS~ARM,data=data)
+```
+
+The value is 0.68, which is a positive number that indicates the line will travel upwards towards the right.
+
+
+
+
+# Inferential  (Build linear model)
+  
+```{r}
+model.1 <- lm(SIMS~ARM,data=data)
+summary.lm(model.1)
+```
+
+The evaluation for the line that fits this is SIMS is equal to -4.1 + .05 * ARM
+The formula needed is y = mx + b to create a line. The Adjusted R-squared is the number to look at
+
+
+# now add the model fit to our plot
+  
+```{r}
+basicNN + geom_point() + geom_smooth(method=lm)
+``` 
+
+It looks like the value of the Y-intercept would be around 1.
+
+
 
 
 
