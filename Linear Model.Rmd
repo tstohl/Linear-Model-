@@ -13,7 +13,7 @@ data <- read.csv(file="https://onlinestatbook.com/case_studies_rvls/physical_str
 ```
 
 
-#Introduction
+##Introduction
 
 Read about the data from the website where it is staged.  Then form three regression models; Model1 is SIMS~ARM, Model2 is SIMS~GRIP, and Model3 is SIMS~ARM+GRIP. For each model find a 95% prediction interval of SIMS given a value of 94  for GRIP and 88 for ARM. Compare Model1 with Model3 using anova. Write it up in a markdown document, push the project up to your github account and submit it back to canvas as link. 
 
@@ -21,37 +21,31 @@ Read about the data from the website where it is staged.  Then form three regres
 You can import the data directly from a link to its website.  Copy that link to the clipboard by right clicking on Raw Data and then copy link.
 
 
-#Methods
+## Methods
 
 This project required a Githup repo to be created from scratch. The project needed to be written and the data needed to be read in via svs file. The helper file needed for this project is num~num. The four variable that are displayed in the environment pane are all numerical variables.
 
-##Results
+# Results
 
-#Graphical Results
+# Graphical Desciptive Results
 
-#Plot scatterplot
-
-```{r}
-plot(SIMS~ARM,data=data)
-```
-
-
+Plot scatterplot
 
 
 ```{r}
 basicNN <- ggplot(data,aes(y=SIMS,x=ARM))
 ```
-##Now add in scatterplot
+## Basic scatterplot
 
 ```{r}
 basicNN + geom_point()
 ```
   
   
-The y-axis is SIMS and the x-axis is ARM. This plot shows that there is a positive linear correlation.
+The y-axis is SIMS and the x-axis is ARM. This plot shows that there is a positive linear correlation. Theres's a positive correlation between ARM and SIMS displayed in this plot above.
 
 
-# Numerical results
+# Numerical Descriptive results
 
 ```{r}
 cor(SIMS~ARM,data=data)
@@ -68,26 +62,107 @@ The value is 0.68, which is a positive number that indicates the line will trave
 model.1 <- lm(SIMS~ARM,data=data)
 summary.lm(model.1)
 ```
-In this linear regeression the numers that should be considered are the estimate coefficients. To predict SIMS based on arm strength -4.1 would be added to .05 and then multiplied by ARM. 
-This equation for the predition of SIMS would look like this:-4.1 + .05 * ARM
-The formula needed is y = mx + b to create a line. The Adjusted R-squared is the number to look at.
+If you go 1.226 up or down that is the prediction interval.
+
+ The residual standard error represents the standard deviation of the  error points
+In this a linear regression model. the numbers that should be considered to create the prediction equation are the estimate coefficients. To predict SITS based on ARM strength, the intercept, -4.1 would be added to .05,ARM and then multiplied by ARM. 
+This equation for the prediction of SIMS would look like this:-4.1 + .05 * ARM.
+The formula needed is y = mx + b to create a line. The bigger the Adjusted R-squared, the better the model beacsue it means that many of the errors were fixed. The degrees of freedom will be taken away from the Multiple-R squared and then what will be left is the Adjusted R-squared.
+In the adjusted R Square, the error was reduced by 46%(0.467).
+The adjusted R-squared represents is the reduction of the error from the mean model on a percentage basis.
+
+The 145 degrees of freedom is how many data points are displayed in the plot. 
+The line is to be estimate where it hits the y-axis. Each data will change the degree of freedom. Every time you add more stuff to the model, the Mutiple R-squared will go down a small percentage.
 
 
-# now add the model fit to our plot
+
+# Added in the model (Blue line) to fit plot
   
 ```{r}
 basicNN + geom_point() + geom_smooth(method=lm)
 ``` 
 
-The equation formula for a line is y=mx+b. This  regression line that has been drawn used this formula. The equation of this blue line is -4.1 + 0.5 * ARM.
+All the dots traveling up are part of that particular distribution. 
+
+The standard error was 1.226
+ Of each point along the ARM axis, the mean of the distribution is where the line falls. 
+The spread of the dots of the standard deviation of that normal distribution. 
+Each pt of thr line is a representative of one of the outputs.
+
+Every point displayed in this plot is an error Take the distance between each point ans square it. The sum of all the squared errors is the average mean error. Take the value of the average away from every dot, and then add that up.
+
+
+The equation formula for a line is y=mx+b. This regression line that has been drawn used this formula. The equation for SIMS explained by this line is:
+SIMS = -4.1 + 0.5 * ARM.
+
+To find the The value of SIMS multiply the intercept, -4.095160 and the the Arm value, 0.054563.
+
+Multiply 100 by ARM, 0.054563 which equals 5.45. Then, add the intercept which is  about-4.1.
 
 To figure out what value on the y-intercept passes over the 100 on the x-axis, refer to the values included. It looks that the It looks like the value of the y-intercept would be around 1.25, give or take a few.
 
-The code block above adds the regression line to the plot. It makes reading the plot easier and more accurate. This line is in a positive linear association.
+
+
+```{r}
+newdata = data.frame(GRIP= 94, ARM = 88)
+predict(model.1, newdata, interval = "prediction")
+```
+This is a prediction interval.How far does one point vary from the other
+If you take .7 away from 3.13, you'd end up approximately 2.3.
 
 
 
-#Discussion and Conclusion
+
+
+
+
+# Results
+
+# Graphical Desciptive Results
+
+Plot scatterplot
+
+
+```{r}
+basicNN <- ggplot(data,aes(y=SIMS,x=GRIP))
+```
+## Basic scatterplot
+
+```{r}
+basicNN + geom_point()
+```
+
+
+The points in this plot are more closely knit.
+
+# Numerical Descriptive results
+
+```{r}
+cor(SIMS~GRIP,data=data)
+```
+
+The correlation is 0.63. the hughter the correlation, the cloerr the pointa rae to each other. This correlation is a bit smaller than the previous correlation between ARM.
+
+# Inferential  (Build linear model) Results
+  
+```{r}
+model.2 <- lm(SIMS~GRIP,data=data)
+summary.lm(model.2)
+```
+
+The adjusted R- square is 0.4053. Previously, the number was 0.409
+Small standard error makes for a successful model. This model is not as good as the model With ARM,(model 1) because the standard deviation is larger. Notice the difference between the Multiple R-squared and the ajusted R-squared.
+
+
+
+```{r}
+basicNN + geom_point() + geom_smooth(method=lm)
+``` 
+
+
+
+
+# Discussion and Conclusion
 
 
 
