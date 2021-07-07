@@ -5,7 +5,7 @@ date: "6/29/2021"
 output:    
    html_document:
      toc: true
-     number_sections: true
+     toc_depth: 5
 ---
 
 ```{r setup, include=FALSE}
@@ -31,7 +31,6 @@ You can import the data directly from a link to its website.  Copy that link to 
 
 
 
-### Graphical Desciptive Results
 
 Plot scatterplot
 
@@ -49,7 +48,7 @@ basicNN + geom_point()
 The y-axis is SIMS and the x-axis is ARM. This plot shows that there is a positive linear correlation. Theres's a positive correlation between ARM and SIMS displayed in this plot above.
 
 
-### Numerical Descriptive results
+#### Numerical Descriptive results
 
 ```{r}
 cor(SIMS~ARM,data=data)
@@ -60,12 +59,16 @@ The value is 0.68, which is a positive number that indicates the line will trave
 
 
 
-### Inferential  (Build linear model) Results
+#### Inferential  (Build linear model) Results
   
 ```{r}
 model.1 <- lm(SIMS~ARM,data=data)
 summary.lm(model.1)
 ```
+
+This model is better than thr one for GRIP. The Ajusted R-Square is bigger, which means more errors were reduced.
+
+
 If you go 1.226 up or down that is the prediction interval.
 
  The residual standard error represents the standard deviation of the  error points
@@ -123,7 +126,7 @@ If you take .7 away from 3.13, you'd end up approximately 2.3.
 
 # SIMS~GRIP
 
-### Graphical Desciptive Results
+
 
 Plot scatterplot
 
@@ -140,7 +143,7 @@ basicNN + geom_point()
 
 The points in this plot are more closely knit.
 
-### Numerical Descriptive results
+#### Numerical Descriptive results
 
 ```{r}
 cor(SIMS~GRIP,data=data)
@@ -160,7 +163,7 @@ Small standard error makes for a successful model. This model is not as good as 
 
 
 
-### Inferential  (Build linear model) Results
+#### Added in the model (Blue line) to fit plot
 
 
 ```{r}
@@ -169,12 +172,56 @@ basicNN + geom_point() + geom_smooth(method=lm)
 
 
 
+```{r}
+predict(model.2, newdata, interval = "prediction")
+```
+
+
+
+
+
+
+
+
 # SIMS~ARM + GRIP
-
-
 
 #### Inferential  (Build linear model) Results
   
+
+
+```{r}
+model.3 <- lm(SIMS~GRIP + ARM ,data=data)
+summary.lm(model.3)
+```
+GRIP * .024470 + ARM * 0.037 = SIMS
+
+The residual standard error is the variation in all points.
+The bigger the Adjusted R square the better the model. The Multiple R-squared is always a little bit bigger than the Adjusted R-squared. The bigger the ajusted R square the more you reduce the error.
+
+ 
+
+
+
+
+
+```{r}
+predict(model.3, newdata, interval = "prediction")
+```
+
+
+
+
+
+
+
+#### Model Comparisson 
+
+
+The models must be nested. That means all the independent variables in one model are also in the other models. SIMS is a function of ARM.
+Model 2 is nested in model 3. Model 1 is nested in model 3. 
+
+
+
 
 
 
