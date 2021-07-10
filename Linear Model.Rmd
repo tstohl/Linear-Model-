@@ -24,21 +24,21 @@ Read about the data from the website where it is staged. Then form three regress
 You can import the data directly from a link to its website.  Copy that link to the clipboard by right clicking on Raw Data and then copy link.
 
 
+
+The first two models include plots, however, the third model does not because the required sofward to create a model of these dimesions in not available. 
+
+
 # SIMS~ARM
 
 
 
-
-
-
-
-Plot scatterplot
+## Plot of SIMS~ARM
 
 
 ```{r}
 basicNN <- ggplot(data,aes(y=SIMS,x=ARM))
 ```
-#### Basic scatterplot
+
 
 ```{r}
 basicNN + geom_point()
@@ -48,7 +48,7 @@ basicNN + geom_point()
 The y-axis is SIMS and the x-axis is ARM. This plot shows that there is a positive linear correlation. Theres's a positive correlation between ARM and SIMS displayed in this plot above.
 
 
-#### Numerical Descriptive results
+## Numerical Summary
 
 ```{r}
 cor(SIMS~ARM,data=data)
@@ -59,14 +59,13 @@ The value is 0.68, which is a positive number that indicates the line will trave
 
 
 
-#### Inferential  (Build linear model) Results
-  
+## Inferential Results
 ```{r}
 model.1 <- lm(SIMS~ARM,data=data)
 summary.lm(model.1)
 ```
 
-This model is better than thr one for GRIP. The Ajusted R-Square is bigger, which means more errors were reduced.
+This model is better than thr one for GRIP. The Adjusted R-Square is bigger, which means more errors were reduced.
 
 
 If you go 1.226 up or down that is the prediction interval.
@@ -74,20 +73,23 @@ If you go 1.226 up or down that is the prediction interval.
  The residual standard error represents the standard deviation of the  error points
 In this a linear regression model. the numbers that should be considered to create the prediction equation are the estimate coefficients. To predict SITS based on ARM strength, the intercept, -4.1 would be added to .05,ARM and then multiplied by ARM. 
 This equation for the prediction of SIMS would look like this:-4.1 + .05 * ARM.
-The formula needed is y = mx + b to create a line. The bigger the Adjusted R-squared, the better the model beacsue it means that many of the errors were fixed. The degrees of freedom will be taken away from the Multiple-R squared and then what will be left is the Adjusted R-squared.
+The formula needed is y = mx + b to create a line. The bigger the Adjusted R-squared, the better the model because it means that many of the errors were fixed. The degrees of freedom will be taken away from the Multiple-R squared and then what will be left is the Adjusted R-squared.
 In the adjusted R Square, the error was reduced by 46%(0.467).
 The adjusted R-squared represents is the reduction of the error from the mean model on a percentage basis.
 
 The 145 degrees of freedom is how many data points are displayed in the plot. 
-The line is to be estimate where it hits the y-axis. Each data will change the degree of freedom. Every time you add more stuff to the model, the Mutiple R-squared will go down a small percentage.
+The line is to be estimate where it hits the y-axis. Each data will change the degree of freedom. Every time you add more stuff to the model, the Multiple R-squared will go down a small percentage.
 
 
 
-#### Added in the model (Blue line) to fit plot
+## Plot with fitted line
   
 ```{r}
 basicNN + geom_point() + geom_smooth(method=lm)
 ``` 
+
+The equation formula for a line is y=mx+b. This regression line that has been drawn used this formula. The equation for SIMS explained by this line is: SIMS = -4.1 + 0.5 * ARM
+
 
 All the dots traveling up are part of that particular distribution. 
 
@@ -99,8 +101,7 @@ Each pt of thr line is a representative of one of the outputs.
 Every point displayed in this plot is an error Take the distance between each point ans square it. The sum of all the squared errors is the average mean error. Take the value of the average away from every dot, and then add that up.
 
 
-The equation formula for a line is y=mx+b. This regression line that has been drawn used this formula. The equation for SIMS explained by this line is:
-SIMS = -4.1 + 0.5 * ARM.
+
 
 To find the The value of SIMS multiply the intercept, -4.095160 and the the Arm value, 0.054563.
 
@@ -114,27 +115,22 @@ To figure out what value on the y-intercept passes over the 100 on the x-axis, r
 newdata = data.frame(GRIP= 94, ARM = 88)
 predict(model.1, newdata, interval = "prediction")
 ```
-This is a prediction interval.How far does one point vary from the other
+This is a prediction interval. How far does one point vary from the other
 If you take .7 away from 3.13, you'd end up approximately 2.3.
-
-
-
-
-
 
 
 
 # SIMS~GRIP
 
 
+## Plot of SIMS~GRIP
 
-Plot scatterplot
 
 
 ```{r}
 basicNN <- ggplot(data,aes(y=SIMS,x=GRIP))
 ```
-#### Basic scatterplot
+
 
 ```{r}
 basicNN + geom_point()
@@ -143,15 +139,15 @@ basicNN + geom_point()
 
 The points in this plot are more closely knit.
 
-#### Numerical Descriptive results
+## Numerical Summary
 
 ```{r}
 cor(SIMS~GRIP,data=data)
 ```
 
-The correlation is 0.63. the hughter the correlation, the cloerr the pointa rae to each other. This correlation is a bit smaller than the previous correlation between ARM.
+The correlation is 0.63. the hughter the correlation, the cloerr the points are to each other. This correlation is a bit smaller than the previous correlation between ARM.
 
-#### Inferential  (Build linear model) Results
+## Inferential Results
   
 ```{r}
 model.2 <- lm(SIMS~GRIP,data=data)
@@ -159,33 +155,42 @@ summary.lm(model.2)
 ```
 
 The adjusted R- square is 0.4053. Previously, the number was 0.409
-Small standard error makes for a successful model. This model is not as good as the model With ARM,(model 1) because the standard deviation is larger. Notice the difference between the Multiple R-squared and the ajusted R-squared.
+Small standard error makes for a successful model. This model is not as good as the model With ARM,(model 1) because the standard deviation is larger. Notice the difference between the Multiple R-squared and the adjusted R-squared.
+
+
+In the adjusted R Square, the error was reduced by 40%(0.4053).
+The adjusted R-squared represents is the reduction of the error from the mean model on a percentage basis.
+The formula needed is y = mx + b to create a line.
+The adjusted R-squared represents is the reduction of the error from the mean model on a percentage basis.
 
 
 
-#### Added in the model (Blue line) to fit plot
+
+
+## Plot with fitted line
 
 
 ```{r}
 basicNN + geom_point() + geom_smooth(method=lm)
 ``` 
 
+The equation formula for a line is y=mx+b. This regression line that has been drawn used this formula. The equation for SIMS explained by this line is: SIMS = -4.1 + 0.45 * GRIP
+
+
+
 
 
 ```{r}
 predict(model.2, newdata, interval = "prediction")
 ```
+The Upper and Lower predictions represent the threshold.
 
 
 
 
+# SIMS ~ ARM + GRIP
 
-
-
-
-# SIMS~ARM + GRIP
-
-#### Inferential  (Build linear model) Results
+## Inferential Results
   
 
 
@@ -193,7 +198,8 @@ predict(model.2, newdata, interval = "prediction")
 model.3 <- lm(SIMS~GRIP + ARM ,data=data)
 summary.lm(model.3)
 ```
-GRIP * .024470 + ARM * 0.037 = SIMS
+GRIP * .0244 + ARM * 0.037 = SIMS
+
 
 The residual standard error is the variation in all points.
 The bigger the Adjusted R square the better the model. The Multiple R-squared is always a little bit bigger than the Adjusted R-squared. The bigger the ajusted R square the more you reduce the error.
@@ -201,32 +207,39 @@ The bigger the Adjusted R square the better the model. The Multiple R-squared is
  
 
 
-
-
-
 ```{r}
 predict(model.3, newdata, interval = "prediction")
 ```
 
+# Comparing Models
+
+## Assesing SIM~ARM How good is it
+
+
+The key in telling which model is better is looking at the model with the highest adjusted R-squared.
+
+The best model is model 3 because the adjusted R-squared was at 0.53. This means that the most errors were removed. There was an adjustment of 53%.
+The second best model is model 2 and it adjusted R-squared is at 0.4053 This means around 40% of the errors were reduced. The least effective model is model one that's got an adjusted R-squared of only 0.467. 
+The adjusted R squared gives you a picture of the variation that's being explained by the model.
 
 
 
 
 
 
-#### Model Comparisson 
-
-
-The models must be nested. That means all the independent variables in one model are also in the other models. SIMS is a function of ARM.
-Model 2 is nested in model 3. Model 1 is nested in model 3. 
+The models must be nested. That means all the independent variables in one model are also in the other models. 
+Model 2 is nested in model 3. Model 1 is nested in model 3. Model 1 and 2 are not nested because GRIP is not nested in nested in ARM.
 
 
 
 
+### Comparing SIMS~ARM to SIMS~GRIP
+
+### Comparing SIMS~ARM to SIMS~ARM + GRIP
+
+#### Statistical test SIMS~ ARM SIMS~ARM+GRIP
 
 
-
-# Discussion and Conclusion
 
 
 
